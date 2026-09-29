@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>today is</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:rgba(143,166,142,.18);--warm:rgba(224,120,86,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:transparent}
+body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
+.w{width:100%;max-width:520px;display:flex;align-items:center;gap:16px}
+.w.col{flex-direction:column;text-align:center;gap:8px}
+.blob{flex:none;width:88px;height:88px;display:grid;place-items:center;background:var(--soft);
+  border-radius:58% 42% 55% 45% / 48% 56% 44% 52%}
+.blob.warm{background:var(--warm)}
+.blob img{width:70px;height:70px;object-fit:contain}
+.eye{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);font-weight:700}
+.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.08}
+.sub{font-size:14px;color:var(--olive);line-height:1.4}
+button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
+button.ghost{background:var(--soft);color:var(--deep)}
+button:hover{filter:brightness(.96)}
+input{font-family:inherit;font-size:15px;color:var(--deep);background:var(--soft);border:0;border-radius:999px;padding:8px 14px;width:100%;outline:none}
+input:focus{box-shadow:0 0 0 2px var(--sage)}
+</style></head><body>
+
+<div class="w">
+  <div class="blob"><img src="data:image/png;base64,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" alt=""></div>
+  <div>
+    <p class="eye" id="day"></p>
+    <p class="big" id="focus" style="font-size:30px"></p>
+    <p class="sub" id="do"></p>
+  </div>
+</div>
+<script>
+// your week. edit the words any time.
+const WEEK={
+ 0:['rest day','rest counts. water yourself.'],
+ 1:['admin','log last week. answer emails. plan the week.'],
+ 2:['wholesale','follow up with two shops. check Faire. pack orders.'],
+ 3:['make','print. cut. pack. draw one new thing.'],
+ 4:['make and shops','finish orders. drop off at shops.'],
+ 5:['content','film two reels. post. plan next week.'],
+ 6:['market or rest','sell some stakes or sleep in. both count.'],
+};
+const d=new Date(),w=WEEK[d.getDay()];
+document.getElementById('day').textContent='today is '+d.toLocaleDateString('en-CA',{weekday:'long'}).toLowerCase();
+document.getElementById('focus').textContent=w[0];
+document.getElementById('do').textContent=w[1];
+</script></body></html>

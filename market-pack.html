@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>market bag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:rgba(143,166,142,.18);--warm:rgba(224,120,86,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:transparent}
+body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
+.w{width:100%;max-width:520px;display:flex;align-items:center;gap:16px}
+.w.col{flex-direction:column;text-align:center;gap:8px}
+.blob{flex:none;width:88px;height:88px;display:grid;place-items:center;background:var(--soft);
+  border-radius:58% 42% 55% 45% / 48% 56% 44% 52%}
+.blob.warm{background:var(--warm)}
+.blob img{width:70px;height:70px;object-fit:contain}
+.eye{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);font-weight:700}
+.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.08}
+.sub{font-size:14px;color:var(--olive);line-height:1.4}
+button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
+button.ghost{background:var(--soft);color:var(--deep)}
+button:hover{filter:brightness(.96)}
+input{font-family:inherit;font-size:15px;color:var(--deep);background:var(--soft);border:0;border-radius:999px;padding:8px 14px;width:100%;outline:none}
+input:focus{box-shadow:0 0 0 2px var(--sage)}
+</style></head><body>
+
+<style>
+body{align-items:flex-start}
+ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:10px 0 12px;text-align:left}
+li label{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
+li input{appearance:none;width:18px;height:18px;flex:none;padding:0;border-radius:50%;background:var(--soft);cursor:pointer}
+li input:checked{background:var(--sage);box-shadow:inset 0 0 0 4px #F7F3EA}
+li input:checked+span{color:var(--olive);text-decoration:line-through}
+</style>
+<div class="w col" style="max-width:560px;align-items:stretch;text-align:left">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="blob warm" style="width:64px;height:64px"><img src="data:image/png;base64,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" style="width:50px;height:50px" alt=""></div>
+    <div><p class="eye">market bag</p><p class="big" id="head" style="font-size:22px"></p></div>
+  </div>
+  <ul id="list"></ul>
+  <div><button class="ghost" id="clear">empty the bag for next time</button></div>
+</div>
+<script>
+// edit this list any time
+const ITEMS=["stakes, all designs", "stickers and sheets", "magnets", "cards and envelopes", "price signs", "table cloth", "display racks", "card reader, charged", "phone charger", "cash float", "bags", "member QR sign", "tape, pens, scissors", "water and snacks"];
+const KEY='sl-market-pack';
+let got={};try{got=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(got))}catch(e){}};
+function draw(){const ul=document.getElementById('list');ul.innerHTML='';
+ ITEMS.forEach((t,i)=>{const li=document.createElement('li');
+  li.innerHTML='<label><input type="checkbox"'+(got[i]?' checked':'')+'><span></span></label>';
+  li.querySelector('span').textContent=t;
+  li.querySelector('input').onchange=e=>{got[i]=e.target.checked;save();head();};ul.appendChild(li);});head();}
+function head(){const n=ITEMS.filter((_,i)=>got[i]).length;
+ document.getElementById('head').textContent=n===ITEMS.length?'all packed. go sell some sass.':n+' of '+ITEMS.length+' packed';}
+document.getElementById('clear').onclick=()=>{got={};save();draw();};
+draw();
+</script></body></html>

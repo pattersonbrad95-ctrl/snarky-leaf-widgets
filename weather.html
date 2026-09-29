@@ -4,23 +4,28 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:#EFE8D8}
+:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:rgba(143,166,142,.18);--warm:rgba(224,120,86,.14)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--cream)}
-body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:14px;overflow:hidden}
-.card{width:100%;max-width:520px;background:var(--cream);border:1.5px solid var(--kraft);border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:16px}
-.card.col{flex-direction:column;text-align:center}
-.art{width:84px;height:84px;flex:none;object-fit:contain}
+html,body{height:100%;background:transparent}
+body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
+.w{width:100%;max-width:520px;display:flex;align-items:center;gap:16px}
+.w.col{flex-direction:column;text-align:center;gap:8px}
+.blob{flex:none;width:88px;height:88px;display:grid;place-items:center;background:var(--soft);
+  border-radius:58% 42% 55% 45% / 48% 56% 44% 52%}
+.blob.warm{background:var(--warm)}
+.blob img{width:70px;height:70px;object-fit:contain}
 .eye{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);font-weight:700}
-.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.05}
-.sub{font-size:14px;color:var(--olive)}
-button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:30px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
-button.ghost{background:transparent;color:var(--olive);border:1.5px solid var(--kraft)}
-button:hover{filter:brightness(.95)}
+.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.08}
+.sub{font-size:14px;color:var(--olive);line-height:1.4}
+button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
+button.ghost{background:var(--soft);color:var(--deep)}
+button:hover{filter:brightness(.96)}
+input{font-family:inherit;font-size:15px;color:var(--deep);background:var(--soft);border:0;border-radius:999px;padding:8px 14px;width:100%;outline:none}
+input:focus{box-shadow:0 0 0 2px var(--sage)}
 </style></head><body>
 
-<div class="card">
-  <img class="art" id="art" src="data:image/png;base64,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" alt="">
+<div class="w">
+  <div class="blob warm"><img src="data:image/png;base64,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" alt=""></div>
   <div>
     <p class="eye">woodstock today</p>
     <p class="big" style="font-size:40px"><span id="t">--</span><span style="font-size:20px">°C</span></p>
@@ -35,5 +40,4 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=43.13&longitude=-80.75&cu
   document.getElementById('t').textContent=t;
   document.getElementById('s').textContent=(W[j.current.weather_code]||'weather')+' · high '+Math.round(j.daily.temperature_2m_max[0])+', low '+Math.round(j.daily.temperature_2m_min[0])+' · '+QUIP(t);})
  .catch(()=>document.getElementById('s').textContent='the sky is not answering');
-</script>
-</body></html>
+</script></body></html>

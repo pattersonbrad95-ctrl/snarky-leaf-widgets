@@ -4,29 +4,35 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:#EFE8D8}
+:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:rgba(143,166,142,.18);--warm:rgba(224,120,86,.14)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--cream)}
-body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:14px;overflow:hidden}
-.card{width:100%;max-width:520px;background:var(--cream);border:1.5px solid var(--kraft);border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:16px}
-.card.col{flex-direction:column;text-align:center}
-.art{width:84px;height:84px;flex:none;object-fit:contain}
+html,body{height:100%;background:transparent}
+body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
+.w{width:100%;max-width:520px;display:flex;align-items:center;gap:16px}
+.w.col{flex-direction:column;text-align:center;gap:8px}
+.blob{flex:none;width:88px;height:88px;display:grid;place-items:center;background:var(--soft);
+  border-radius:58% 42% 55% 45% / 48% 56% 44% 52%}
+.blob.warm{background:var(--warm)}
+.blob img{width:70px;height:70px;object-fit:contain}
 .eye{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);font-weight:700}
-.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.05}
-.sub{font-size:14px;color:var(--olive)}
-button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:30px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
-button.ghost{background:transparent;color:var(--olive);border:1.5px solid var(--kraft)}
-button:hover{filter:brightness(.95)}
+.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.08}
+.sub{font-size:14px;color:var(--olive);line-height:1.4}
+button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
+button.ghost{background:var(--soft);color:var(--deep)}
+button:hover{filter:brightness(.96)}
+input{font-family:inherit;font-size:15px;color:var(--deep);background:var(--soft);border:0;border-radius:999px;padding:8px 14px;width:100%;outline:none}
+input:focus{box-shadow:0 0 0 2px var(--sage)}
 </style></head><body>
 
-<div class="card col" style="gap:10px">
+<div class="w col">
   <p class="eye" id="mode">focus</p>
-  <div style="position:relative;width:120px;height:120px">
-    <svg viewBox="0 0 120 120" width="120" height="120" style="position:absolute;inset:0;transform:rotate(-90deg)">
-      <circle cx="60" cy="60" r="54" fill="none" stroke="var(--soft)" stroke-width="7"/>
-      <circle id="ring" cx="60" cy="60" r="54" fill="none" stroke="var(--sage)" stroke-width="7" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="339.3"/>
+  <div style="position:relative;width:128px;height:128px">
+    <div class="blob" style="position:absolute;inset:14px;width:auto;height:auto"></div>
+    <svg viewBox="0 0 120 120" width="128" height="128" style="position:absolute;inset:0;transform:rotate(-90deg)">
+      <circle cx="60" cy="60" r="55" fill="none" stroke="rgba(143,166,142,.25)" stroke-width="6"/>
+      <circle id="ring" cx="60" cy="60" r="55" fill="none" stroke="var(--sage)" stroke-width="6" stroke-linecap="round" stroke-dasharray="345.6" stroke-dashoffset="345.6"/>
     </svg>
-    <img id="plant" src="data:image/png;base64,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" alt="" style="position:absolute;left:50%;bottom:22px;width:64px;height:64px;transform:translateX(-50%) scale(.35);transform-origin:50% 100%;transition:transform .8s">
+    <img id="plant" src="data:image/png;base64,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" alt="" style="position:absolute;left:50%;bottom:24px;width:76px;height:76px;transform:translateX(-50%) scale(.5);transform-origin:50% 100%;transition:transform .8s">
   </div>
   <p class="big" id="time" style="font-size:36px">25:00</p>
   <p class="sub" id="say">water me with twenty five minutes.</p>
@@ -43,20 +49,19 @@ let mode='focus',left=LEN.focus,timer=null,done=0;
 const $=id=>document.getElementById(id);
 function draw(){const tot=LEN[mode],p=1-left/tot;
  $('time').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
- $('ring').style.strokeDashoffset=339.3*(1-p);
+ $('ring').style.strokeDashoffset=345.6*(1-p);
  $('ring').style.stroke=mode==='focus'?'var(--sage)':'var(--terra)';
  $('mode').textContent=mode+(done?' · '+done+' grown today':'');
- if(mode==='focus'){$('plant').src=SPRIG;$('plant').style.transform='translateX(-50%) scale('+(0.35+0.65*p)+')';
+ if(mode==='focus'){$('plant').src=SPRIG;$('plant').style.transform='translateX(-50%) scale('+(0.5+0.5*p)+')';
    const l=LINES.focus;$('say').textContent=timer?l[Math.min(l.length-1,1+Math.floor(p*3))]:l[0];}}
 function end(){clearInterval(timer);timer=null;$('go').textContent='start';
  if(mode==='focus'){done++;$('plant').src=DAISY;$('plant').style.transform='translateX(-50%) scale(1)';$('say').textContent='look at me. I bloomed. take a break.';mode='break';left=LEN.break;$('swap').textContent='focus';}
  else{$('say').textContent='break is over. back to it.';mode='focus';left=LEN.focus;$('swap').textContent='break';}
- draw();try{new AudioContext().resume()}catch(e){}}
+ draw();}
 $('go').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('go').textContent='start';return;}
  $('go').textContent='pause';timer=setInterval(()=>{left--;if(left<=0)return end();draw();},1000);draw();};
 $('reset').onclick=()=>{clearInterval(timer);timer=null;$('go').textContent='start';left=LEN[mode];draw();};
 $('swap').onclick=()=>{clearInterval(timer);timer=null;$('go').textContent='start';mode=mode==='focus'?'break':'focus';left=LEN[mode];
  $('swap').textContent=mode==='focus'?'break':'focus';$('say').textContent=LINES[mode][0];draw();};
 draw();
-</script>
-</body></html>
+</script></body></html>

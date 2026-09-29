@@ -4,18 +4,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:#EFE8D8}
+:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--clay:#B8503A;--cream:#F7F3EA;--kraft:#D8C7A8;--soft:rgba(143,166,142,.18);--warm:rgba(224,120,86,.14)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--cream)}
-body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:14px;overflow:auto}
-.card{width:100%;max-width:520px;background:var(--cream);border:1.5px solid var(--kraft);border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:16px}
-.card.col{flex-direction:column;text-align:center}
-.art{width:84px;height:84px;flex:none;object-fit:contain}
+html,body{height:100%;background:#F7F3EA}
+body{font-family:Nunito,ui-rounded,system-ui,sans-serif;color:var(--deep);display:flex;align-items:center;justify-content:center;padding:8px;overflow:auto}
+.w{width:100%;max-width:520px;display:flex;align-items:center;gap:16px}
+.w.col{flex-direction:column;text-align:center;gap:8px}
+.blob{flex:none;width:88px;height:88px;display:grid;place-items:center;background:var(--soft);
+  border-radius:58% 42% 55% 45% / 48% 56% 44% 52%}
+.blob.warm{background:var(--warm)}
+.blob img{width:70px;height:70px;object-fit:contain}
 .eye{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);font-weight:700}
-.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.05}
-.sub{font-size:14px;color:var(--olive)}
-button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:30px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
-button.ghost{background:transparent;color:var(--olive);border:1.5px solid var(--kraft)}
-button:hover{filter:brightness(.95)}
+.big{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--deep);line-height:1.08}
+.sub{font-size:14px;color:var(--olive);line-height:1.4}
+button{font-family:inherit;font-weight:700;font-size:13px;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
+button.ghost{background:var(--soft);color:var(--deep)}
+button:hover{filter:brightness(.96)}
+input{font-family:inherit;font-size:15px;color:var(--deep);background:var(--soft);border:0;border-radius:999px;padding:8px 14px;width:100%;outline:none}
+input:focus{box-shadow:0 0 0 2px var(--sage)}
 </style></head><body>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:1100px;height:100%;overflow:auto"><iframe src="clock.html" style="width:100%;height:170px;border:0"></iframe><iframe src="pomodoro.html" style="width:100%;height:300px;border:0"></iframe><iframe src="countdown.html" style="width:100%;height:170px;border:0"></iframe><iframe src="plant-says.html" style="width:100%;height:170px;border:0"></iframe><iframe src="weather.html" style="width:100%;height:170px;border:0"></iframe></div></body></html>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:1100px;height:100%;overflow:auto;padding:10px"><iframe src="clock.html" style="width:100%;height:150px;border:0"></iframe><iframe src="weather.html" style="width:100%;height:150px;border:0"></iframe><iframe src="plant-says.html" style="width:100%;height:150px;border:0"></iframe><iframe src="countdown.html" style="width:100%;height:150px;border:0"></iframe><iframe src="pomodoro.html" style="width:100%;height:320px;border:0"></iframe><iframe src="today.html" style="width:100%;height:150px;border:0"></iframe><iframe src="market-pack.html" style="width:100%;height:380px;border:0"></iframe><iframe src="price-helper.html" style="width:100%;height:300px;border:0"></iframe><iframe src="content-idea.html" style="width:100%;height:150px;border:0"></iframe></div></body></html>
