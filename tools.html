@@ -23,7 +23,7 @@ button:hover{filter:brightness(.96)}
 input{font-family:inherit;font-size:15px;color:var(--deep);background:var(--soft);border:0;border-radius:999px;padding:8px 14px;width:100%;outline:none}
 input:focus{box-shadow:0 0 0 2px var(--sage)}
 html.dark{--deep:#F1EBDD;--olive:#B7C2A4;--sage:#A9C0A6;--terra:#EC8A68;--soft:rgba(169,192,166,.16);--warm:rgba(236,138,104,.16)}
-html.dark button:not(.ghost){color:#1F1F1F}
+html.dark button:not(.ghost):not([data-p]),html.dark .tabs button.on{color:#1F1F1F}
 html.dark li input:checked{box-shadow:inset 0 0 0 4px #191919 !important}
 </style>
 <script>(function(){var q=new URLSearchParams(location.search).get('theme');
