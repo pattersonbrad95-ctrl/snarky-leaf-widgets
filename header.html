@@ -26,6 +26,8 @@ html.dark,html.dark body{background:#191919 !important}
 html.dark{--deep:#F1EBDD;--olive:#B7C2A4;--sage:#A9C0A6;--terra:#EC8A68;--soft:rgba(169,192,166,.16);--warm:rgba(236,138,104,.16)}
 html.dark button:not(.ghost):not([data-p]),html.dark .tabs button.on{color:#1F1F1F}
 html.dark li input:checked{box-shadow:inset 0 0 0 4px #191919 !important}
+html.dark .blob,html.dark .blob.warm{background:rgba(247,243,234,.88)}
+html.dark #ringbg{fill:rgba(247,243,234,.88)}
 </style>
 <script>(function(){var q=new URLSearchParams(location.search).get('theme');
 if(q==='dark'||(!q&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');})();</script>
@@ -65,6 +67,11 @@ function tick(){const n=new Date(),h=n.getHours();$('part').textContent=(P.find(
 tick();setInterval(tick,15000);
 const now=new Date(),w=WEEK[now.getDay()];
 $('day').textContent='today is '+now.toLocaleDateString('en-CA',{weekday:'long'}).toLowerCase();$('focus').textContent=w[0];$('do').textContent=w[1];
+const t0=new Date();t0.setHours(0,0,0,0);
+const NUDGE={market:['market prep','count stock, charge the card reader, pack the car.','market day','go sell some sass. log sales tonight.'],drop:['drop prep','photos, listings, newsletter draft.','drop day','post it, send it, answer every comment.']};
+for(const [d,label] of DATES){const k=Math.round((new Date(d+'T00:00:00')-t0)/864e5); if(k<0||k>3) continue;
+ const kind=/drop/.test(label)?'drop':(/market/.test(label)?'market':null); if(!kind) continue;
+ const n=NUDGE[kind]; if(k===0){$('focus').textContent=n[2];$('do').textContent=n[3];} else {$('focus').textContent=n[0];$('do').textContent=label+' in '+k+(k===1?' day. ':' days. ')+n[1];} break;}
 const today=new Date();today.setHours(0,0,0,0);
 const nx=DATES.map(([d,t])=>[new Date(d+'T00:00:00'),t]).find(([d])=>d>=today);
 if(nx){const k=Math.round((nx[0]-today)/864e5);$('what').textContent=nx[1];$('n').textContent=k===0?'today':k;$('unit').textContent=k===0?'':k===1?'day to go':'days to go';}
