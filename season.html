@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>season</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--cream:#F7F3EA;--ink:#2E4034;--bg:#F7F3EA;--soft:rgba(143,166,142,.18)}
+html.dark{--ink:#F1EBDD;--bg:#191919;--olive:#B7C2A4;--soft:rgba(169,192,166,.16)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:Nunito,ui-rounded,system-ui,sans-serif;overflow:hidden}
+.serif{font-family:Fraunces,Georgia,serif}
+.eye{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--olive)}
+</style>
+<script>(function(){var q=new URLSearchParams(location.search).get('theme');if(q==='dark'||(!q&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');})();</script>
+</head><body>
+<style>
+body{padding:6px;display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}
+svg text{font-family:Nunito,sans-serif}
+.list{min-width:170px;max-width:250px;display:flex;flex-direction:column;gap:8px}
+.it{display:flex;gap:10px;align-items:center;font-size:13.5px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.it b{font-family:Fraunces,serif;font-size:18px;min-width:34px;text-align:right}
+</style>
+<svg id="wheel" width="210" height="210" viewBox="-112 -112 224 224"></svg>
+<div class="list"><p class="eye">the season ahead</p><div id="list" style="display:flex;flex-direction:column;gap:8px"></div></div>
+<script>
+const DATES=[
+ ['2026-10-03','2026-10-03','kitchener fall market','market'],
+ ['2026-10-15','2026-10-15','holiday drop, members first','drop'],
+ ['2026-11-01','2026-11-01','holiday drop, everyone','drop'],
+ ['2026-11-27','2026-11-29','niagara handmade market','market'],
+ ['2026-12-04','2026-12-06','spirit of the season, guelph','market'],
+ ['2026-12-11','2026-12-13','spirit of the season, guelph','market'],
+ ['2027-01-19','2027-01-19','valentine stickers and cards','drop'],
+ ['2027-03-01','2027-03-01','spring drop, members first','drop'],
+ ['2027-03-15','2027-03-15','spring drop, everyone','drop'],
+];
+const D0=s=>new Date(s+'T00:00:00');
+const TODAY=(()=>{const t=new Date();t.setHours(0,0,0,0);return t})();
+const daysTo=s=>Math.round((D0(s)-TODAY)/864e5);
+const NEXT=DATES.filter(d=>daysTo(d[1])>=0);
+const svg=document.getElementById('wheel'),NS='http://www.w3.org/2000/svg';
+const dark=document.documentElement.classList.contains('dark');
+const INK=dark?'#F1EBDD':'#2E4034', SOFT=dark?'rgba(241,235,221,.12)':'rgba(46,64,52,.1)', BG=dark?'#191919':'#F7F3EA';
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e;}
+const start=new Date(TODAY.getFullYear(),TODAY.getMonth(),1), end=new Date(start);end.setFullYear(end.getFullYear()+1);
+const frac=d=>(d-start)/(end-start), ang=f=>f*2*Math.PI-Math.PI/2;
+const P=(r,f)=>[r*Math.cos(ang(f)),r*Math.sin(ang(f))];
+el('circle',{r:92,fill:'none',stroke:SOFT,'stroke-width':16});
+function arc(f0,f1,color,w){f1=Math.max(f1,f0+0.008);const [x0,y0]=P(92,f0),[x1,y1]=P(92,f1);
+  el('path',{d:'M'+x0+' '+y0+' A92 92 0 '+(f1-f0>.5?1:0)+' 1 '+x1+' '+y1,fill:'none',stroke:color,'stroke-width':w,'stroke-linecap':'round'});}
+arc(0,frac(TODAY),dark?'rgba(241,235,221,.22)':'rgba(46,64,52,.18)',16);
+for(const d of DATES){const f0=frac(D0(d[0])),f1=frac(new Date(D0(d[1]).getTime()+864e5));if(f1<0||f0>1)continue;
+  arc(Math.max(0,f0),Math.min(1,f1),d[3]==='market'?'#E07856':'#8FA68E',d[3]==='market'?16:12);}
+for(let m=0;m<12;m++){const d=new Date(start);d.setMonth(d.getMonth()+m);const f=frac(d),[a,b]=P(84,f),[c,e]=P(100,f),[lx,ly]=P(68,f+1/24);
+  el('line',{x1:a,y1:b,x2:c,y2:e,stroke:BG,'stroke-width':2});
+  const t=el('text',{x:lx,y:ly+4,'text-anchor':'middle','font-size':10,'font-weight':800,fill:INK,opacity:.55});t.textContent=d.toLocaleDateString('en-CA',{month:'short'}).slice(0,3).toLowerCase();}
+const ft=frac(TODAY),[nx,ny]=P(110,ft),[nx0,ny0]=P(76,ft);
+el('line',{x1:nx0,y1:ny0,x2:nx,y2:ny,stroke:INK,'stroke-width':2.5,'stroke-linecap':'round'});
+el('circle',{cx:nx,cy:ny,r:4,fill:INK});
+const n=NEXT[0], k=n?daysTo(n[0]):0;
+let t=el('text',{x:0,y:-16,'text-anchor':'middle','font-size':9.5,'font-weight':800,'letter-spacing':'1.5',fill:INK,opacity:.6});t.textContent='NEXT UP';
+t=el('text',{x:0,y:16,'text-anchor':'middle','font-size':34,'font-family':'Fraunces,serif',fill:n&&n[3]==='market'?'#E07856':'#8FA68E'});t.textContent=n?(k<=0?'now':k):'';
+t=el('text',{x:0,y:33,'text-anchor':'middle','font-size':11,fill:INK,opacity:.8});t.textContent=n?(k<=0?n[3]+' day':(k===1?'day':'days')):'';
+const L=document.getElementById('list');
+NEXT.slice(0,5).forEach(d=>{const k=daysTo(d[0]);const r=document.createElement('div');r.className='it';
+  r.innerHTML='<span class="dot" style="background:'+(d[3]==='market'?'#E07856':'#8FA68E')+'"></span><b></b><span></span>';
+  r.children[1].textContent=k<=0?'now':k; r.children[2].textContent=(k<=0?'':'days · ')+d[2]; L.appendChild(r);});
+const leg=document.createElement('p');leg.className='eye';leg.style.marginTop='4px';leg.innerHTML='<span style="color:#E07856">&#9679;</span> markets &nbsp; <span style="color:#8FA68E">&#9679;</span> drops';L.appendChild(leg);
+</script></body></html>

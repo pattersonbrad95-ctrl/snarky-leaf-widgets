@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>studio plant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#2E4034;--sage:#8FA68E;--olive:#6E7A55;--terra:#E07856;--cream:#F7F3EA;--ink:#2E4034;--bg:#F7F3EA;--soft:rgba(143,166,142,.18)}
+html.dark{--ink:#F1EBDD;--bg:#191919;--olive:#B7C2A4;--soft:rgba(169,192,166,.16)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:Nunito,ui-rounded,system-ui,sans-serif;overflow:hidden}
+.serif{font-family:Fraunces,Georgia,serif}
+.eye{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--olive)}
+</style>
+<script>(function(){var q=new URLSearchParams(location.search).get('theme');if(q==='dark'||(!q&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');})();</script>
+</head><body>
+<style>
+body{padding:6px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+svg{overflow:visible}
+button{font-family:inherit;font-weight:800;font-size:13px;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;background:var(--terra);color:#FFF6F2}
+button:disabled{background:var(--soft);color:var(--olive);cursor:default}
+.line{font-family:Fraunces,serif;font-size:15px;max-width:250px;min-height:2.4em}
+.sub{font-size:12px;color:var(--olive)}
+</style>
+<p class="eye">the studio plant</p>
+<svg id="p" width="150" height="150" viewBox="-75 -140 150 150"></svg>
+<p class="line" id="line"></p>
+<button id="w">water me</button>
+<p class="sub" id="sub"></p>
+<script>
+const NS='http://www.w3.org/2000/svg',svg=document.getElementById('p');
+const ls={get:(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const day=new Date().toLocaleDateString('en-CA');
+let S=ls.get('sl-plant',{days:[],watered:''});
+const dnum=s=>Math.round(new Date(s+'T00:00:00')/864e5), today=dnum(day);
+const last=S.watered?today-dnum(S.watered):99;
+const recent=S.days.filter(d=>today-dnum(d)<21).length;
+const stage=Math.min(7,Math.floor(recent/2)+1), droopy=last>=4&&S.days.length>0;
+const dark=document.documentElement.classList.contains('dark');
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+function draw(){svg.innerHTML='';
+  const ink=dark?'#F1EBDD':'#2E4034', leaf=droopy?'#A7A27A':'#8FA68E', H=20+stage*13;
+  el('path',{d:'M0 -28 C '+(droopy?8:-4)+' '+(-28-H*0.5)+', '+(droopy?14:4)+' '+(-28-H*0.8)+', '+(droopy?18:0)+' '+(-28-H),stroke:ink,'stroke-width':3,fill:'none','stroke-linecap':'round'});
+  for(let i=0;i<stage;i++){const t=(i+1)/(stage+1),y=-28-H*t,side=i%2?1:-1,x=(droopy?7:0)*t,rot=side*(droopy?75:35);
+    const g=el('g',{transform:'translate('+x+','+y+') rotate('+rot+')'});
+    el('path',{d:'M0 0 C 6 -6, 6 -18, 0 -24 C -6 -18, -6 -6, 0 0 Z',fill:leaf,stroke:ink,'stroke-width':2},g);}
+  if(stage>=6&&!droopy) el('circle',{cx:0,cy:-28-H-4,r:6,fill:'#F5B79E',stroke:ink,'stroke-width':2});
+  el('path',{d:'M-30 -30 L30 -30 L24 0 L-24 0 Z',fill:'#E07856',stroke:ink,'stroke-width':2.5,'stroke-linejoin':'round'});
+  el('rect',{x:-34,y:-38,width:68,height:10,rx:4,fill:'#E07856',stroke:ink,'stroke-width':2.5});
+  el('circle',{cx:-9,cy:-15,r:2.2,fill:'#2E4034'});el('circle',{cx:9,cy:-15,r:2.2,fill:'#2E4034'});
+  el('path',{d:droopy?'M-5 -7 Q0 -11 5 -7':'M-5 -9 Q0 -5 5 -9',stroke:'#2E4034','stroke-width':2,fill:'none','stroke-linecap':'round'});
+}
+const OK=['thank you. I was being dramatic anyway.','hydrated. thriving. mildly smug.','another sip, another leaf. that is the deal.','you showed up. I noticed.'];
+const DRY=['oh, you remembered me. how nice.','I am not mad. I am just a little crispy.','missed you. one sip and we pretend this never happened.'];
+const DONE=['already watered. go make something.','I am full. go draw a stake.','enough. I am a plant, not a fish.'];
+const $=id=>document.getElementById(id);
+function say(){
+  $('line').textContent=S.watered===day?DONE[today%3]:(droopy?DRY[today%3]:'water me when you start work. that is all I ask.');
+  $('w').disabled=S.watered===day; $('w').textContent=S.watered===day?'watered today':'water me';
+  $('sub').textContent=recent?recent+' sip'+(recent===1?'':'s')+' in 3 weeks · stage '+stage+' of 7':'one tap a day grows a leaf';
+}
+$('w').onclick=()=>{if(S.watered===day)return;S.watered=day;S.days.push(day);S.days=S.days.slice(-60);ls.set('sl-plant',S);
+  $('line').textContent=OK[today%4];$('w').disabled=true;$('w').textContent='watered today';setTimeout(()=>location.reload(),1600);};
+draw();say();
+</script></body></html>
