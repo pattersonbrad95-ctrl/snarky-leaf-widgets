@@ -78,7 +78,7 @@ async function start(){var m=location.hash.replace(/^#/,'').match(/(?:^|&)e=([^&
  if(!m){app.innerHTML='<div class="c empty">'+dd('seeds','right:14px;top:10px;width:58px;height:60px')+'<span class="brad">budget is on its way</span>it fills in every morning. nothing here lives on the internet.</div>';return}
  var k=getKey();if(!k){lock();return}
  try{var raw=b64u(m[1]),key=await crypto.subtle.importKey('raw',b64u(k),'AES-GCM',false,['decrypt']);
-  var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:raw.slice(0,12)},key,raw.slice(12));init(JSON.parse(new TextDecoder().decode(pt)))}
+  var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:raw.slice(0,12)},key,raw.slice(12));var txt;try{txt=await new Response(new Blob([pt]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text()}catch(z){txt=new TextDecoder().decode(pt)}init(JSON.parse(txt))}
  catch(e){try{localStorage.removeItem('sl-hub-key')}catch(_){}lock('that key didn\u2019t open it. try pasting it again.')}}
 var D,view,sel;
 function init(d){D=d;var when=D.u?new Date(D.u):null;
