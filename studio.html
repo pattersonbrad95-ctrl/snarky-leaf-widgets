@@ -11,8 +11,9 @@ html,body{background:var(--bg);color:var(--ink);font-family:ui-rounded,'SF Pro R
 .brad{font-family:Brad,Nunito,sans-serif;font-weight:400}
 #stage{position:relative;width:100%;perspective:1500px;perspective-origin:50% 30%;overflow:hidden;border-radius:22px;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 #stage.drag{cursor:grabbing}
-#sky{position:absolute;inset:0;border-radius:22px;transition:background 2s}
-#world{position:absolute;left:50%;top:60%;transform-style:preserve-3d;transition:filter 2s}
+#sky{position:absolute;inset:0;z-index:0;border-radius:22px;transition:background 2s}
+#world{position:absolute;left:50%;top:60%;transform-style:preserve-3d}
+#tint{position:absolute;inset:0;border-radius:22px;pointer-events:none;mix-blend-mode:multiply;transition:background 2s}
 .p{position:absolute;left:0;top:0;transform-style:preserve-3d}
 .f{position:absolute;left:0;top:0;transform-style:preserve-3d}
 .bb{position:absolute;left:0;top:0;transform-style:preserve-3d}
@@ -62,13 +63,14 @@ html,body{background:var(--bg);color:var(--ink);font-family:ui-rounded,'SF Pro R
 #lock input{width:100%;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:10px;padding:7px 9px;font:13px ui-monospace,monospace}
 #lock button{margin-top:6px;border:0;border-radius:10px;padding:7px 12px;background:var(--terra);color:#fff;font:800 13px Nunito,sans-serif;cursor:pointer}
 .key{display:block;margin-top:6px;font-size:11.5px;color:var(--mut)}
-@media (prefers-reduced-motion:reduce){#sky,#world{transition:none}}
+
 </style>
 <script>(function(){var q=new URLSearchParams(location.search).get('theme');if(q==='dark'||(!q&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');})();</script>
 </head><body>
 <div id="stage">
  <div id="sky"></div>
  <div id="world"></div>
+ <div id="tint"></div>
  <div class="hud"><h1>the studio</h1><div id="sub">snarky leaf hq</div></div>
  <div class="hint">drag to look around &middot; tap a shop</div>
  <div id="panel"></div>
@@ -110,7 +112,7 @@ function build(){
  world.innerHTML='';BBS=[];T=sky();
  document.getElementById('sky').style.background='radial-gradient(ellipse at 50% 0%,'+T.c[1]+','+T.c[0]+' 70%)';
  stage.classList.toggle('night',T.ph==='night');
- world.style.filter=T.ph==='night'?'brightness(.68) saturate(.85)':T.ph==='dusk'?'brightness(.9) sepia(.12)':'none';
+ document.getElementById('tint').style.background=T.ph==='night'?'rgba(70,80,120,.55)':T.ph==='dusk'?'rgba(255,214,170,.35)':'transparent';
  // floor
  var fl=plane(world,W,DP,'rotateX(90deg)','floor');
  // light from the window
@@ -238,8 +240,8 @@ document.getElementById('panel').addEventListener('pointerdown',function(e){e.st
 document.getElementById('lock').addEventListener('pointerdown',function(e){e.stopPropagation()});
 
 // ---------------------------------------------------------------- camera
-function fit(){var w=stage.clientWidth||700;var h=Math.max(380,Math.min(560,w*.64));stage.style.height=h+'px';scaleS=Math.min(1.1,w/820,h/520);
- world.style.top=(h*.64)+'px';draw()}
+function fit(){var w=stage.clientWidth||700;var h=Math.max(380,Math.min(560,w*.64));stage.style.height=h+'px';scaleS=Math.min(1.3,w/720,h/470);
+ world.style.top=(h*.6)+'px';draw()}
 function draw(){world.style.transform='scale('+scaleS+') rotateX(-22deg) rotateY('+ry+'deg)';for(var i=0;i<BBS.length;i++)place(BBS[i])}
 var dragX=null,ry0=0;
 stage.addEventListener('pointerdown',function(e){dragX=e.clientX;ry0=ryT;stage.classList.add('drag')});
