@@ -156,7 +156,7 @@ function build(){
 
 // ---------------------------------------------------------------- hopping
 var pos={x:10,z:60},trip=null,BEAT=290,HIGH=22,nextIdle=performance.now()+2500,face=1,lastHop=-1;
-function clampFloor(x,z){return [Math.max(-W/2+60,Math.min(W/2-50,x)),Math.max(-DP/2+90,Math.min(DP/2-40,z))]}
+function clampFloor(x,z){return [Math.max(-105,Math.min(W/2-50,x)),Math.max(-DP/2+90,Math.min(DP/2-40,z))]}
 function avoid(x,z){ // keep off the side table and the friend
  if(Math.abs(x-105)<70&&Math.abs(z+130)<60)z=-60;
  if(Math.abs(x+120)<55&&Math.abs(z+140)<45)z=-80;return [x,z]}
