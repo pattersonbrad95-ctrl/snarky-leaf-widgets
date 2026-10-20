@@ -11,9 +11,9 @@ body{display:flex;justify-content:center;align-items:center;padding:20px;gap:28p
 .top{position:absolute;left:0;right:0;top:54px;padding:0 20px;display:flex;justify-content:space-between;align-items:center;z-index:10;pointer-events:none}
 .top h1{font-family:Brad,sans-serif;font-weight:400;font-size:34px;color:var(--ink)}
 .chip{background:var(--paper);border:2px solid var(--ink);border-radius:999px;padding:4px 10px;font-weight:800;font-size:13px;color:var(--ink);box-shadow:1.5px 2.5px 0 rgba(107,74,48,.16)}
-#stage{position:absolute;left:0;right:0;top:0;height:640px;perspective:1100px;perspective-origin:50% 28%;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#stage{position:absolute;left:0;right:0;top:0;height:660px;perspective:1100px;perspective-origin:50% 28%;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
 #sky{position:absolute;inset:0;transition:background 1.5s}
-#world{position:absolute;left:56%;top:530px;transform-style:preserve-3d}
+#world{position:absolute;left:52%;top:540px;transform-style:preserve-3d}
 #tint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;transition:background 1.5s;z-index:2}
 .p,.f,.bb{position:absolute;left:0;top:0;transform-style:preserve-3d}
 .wall{background-color:var(--wall);background-size:100% 100%,100% 100%,130px auto;box-shadow:inset 0 -12px 0 #d9c3a6}
@@ -36,7 +36,14 @@ body{display:flex;justify-content:center;align-items:center;padding:20px;gap:28p
 .cloud{position:absolute;left:-60px;width:56px;height:16px;border-radius:12px;background:rgba(255,255,255,.85);animation:cloud 40s linear infinite}
 .cloud::before{content:'';position:absolute;left:12px;top:-9px;width:24px;height:20px;border-radius:50%;background:inherit}
 @keyframes cloud{to{transform:translateX(220px)}}
-.dock{position:absolute;left:0;right:0;bottom:0;height:178px;background:var(--paper);border-top:2px solid rgba(20,20,20,.08);border-radius:28px 28px 0 0;padding:16px 18px 0;z-index:10}
+.lt::after{content:'';position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;background:transparent;transition:background 1s}
+#world.night .lt::after{background:rgba(58,62,112,.48)}
+#world.dusk .lt::after{background:rgba(255,206,170,.25)}
+#world.dawn .lt::after{background:rgba(255,226,206,.14)}
+#world.night .bb img{filter:brightness(.8) saturate(.9)}
+#world.night .bb.pump.on img{filter:none}
+#world.night .skyw{z-index:1}
+.dock{position:absolute;left:0;right:0;bottom:0;height:150px;background:var(--paper);border-top:2px solid rgba(20,20,20,.08);border-radius:28px 28px 0 0;padding:16px 18px 0;z-index:10}
 .btns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .btn{border:2.5px solid var(--ink);border-radius:18px;padding:12px 0;text-align:center;font-family:Brad,sans-serif;font-size:22px;color:var(--ink);background:#fff;box-shadow:1.5px 2.5px 0 rgba(107,74,48,.2);cursor:pointer}
 .btn.go{background:var(--clay);color:#fff}
@@ -73,11 +80,11 @@ var ry=-22,force='auto',SC=1;
 function mk(tag,cls,parent,css,html){var e=document.createElement(tag);if(cls)e.className=cls;if(css)e.style.cssText=css;if(html!=null)e.innerHTML=html;(parent||world).appendChild(e);return e}
 function plane(parent,w,h,tf,cls,css){return mk('div','f '+(cls||''),parent,'width:'+w+'px;height:'+h+'px;margin:'+(-h/2)+'px 0 0 '+(-w/2)+'px;transform:'+tf+';'+(css||''))}
 function box(parent,x,y,z,w,h,d,top,front,side){var g=mk('div','p',parent,'transform:translate3d('+x+'px,'+y+'px,'+z+'px)');
- plane(g,w,h,'translateZ('+d/2+'px)','', 'background:'+front);plane(g,w,h,'rotateY(180deg) translateZ('+d/2+'px)','', 'background:'+front);
- plane(g,d,h,'rotateY(90deg) translateZ('+w/2+'px)','', 'background:'+side);plane(g,d,h,'rotateY(-90deg) translateZ('+w/2+'px)','', 'background:'+side);
- plane(g,w,d,'rotateX(90deg) translateZ('+h/2+'px)','', 'background:'+top);return g}
+ plane(g,w,h,'translateZ('+d/2+'px)','lt', 'background:'+front);plane(g,w,h,'rotateY(180deg) translateZ('+d/2+'px)','lt', 'background:'+front);
+ plane(g,d,h,'rotateY(90deg) translateZ('+w/2+'px)','lt', 'background:'+side);plane(g,d,h,'rotateY(-90deg) translateZ('+w/2+'px)','lt', 'background:'+side);
+ plane(g,w,d,'rotateX(90deg) translateZ('+h/2+'px)','lt', 'background:'+top);return g}
 // something lying flat on the floor
-function onFloor(x,z,w,d,css,lift){return plane(world,w,d,'translate3d('+x+'px,'+(-(lift||1))+'px,'+z+'px) rotateX(90deg)','', 'pointer-events:none;'+css)}
+function onFloor(x,z,w,d,css,lift,cls){return plane(world,w,d,'translate3d('+x+'px,'+(-(lift||1))+'px,'+z+'px) rotateX(90deg)',cls||'', 'pointer-events:none;'+css)}
 function shadow(x,z,w,d,a){return onFloor(x,z,w,d,'border-radius:50%;background:radial-gradient(ellipse,rgba(70,45,25,'+(a||.28)+'),rgba(70,45,25,0) 70%)',1.2)}
 var BBS=[];
 function bb(x,y,z,html,cls){var e=mk('div','bb '+(cls||''),world,'',html);e.dataset.x=x;e.dataset.y=y;e.dataset.z=z;BBS.push(e);place(e);return e}
@@ -86,26 +93,26 @@ function phase(){if(force!=='auto')return force;var h=new Date().getHours()+new 
 
 var W=440,DP=440,WH=560,T,leaf,lbody,lsh,friend,pump,lit=false;
 // window on the back wall: x of its middle, and its bottom this high off the floor
-var WIN={x:40,w:150,h:232,up:150};
+var WIN={x:-10,w:150,h:232,up:150};
 function build(){
  world.innerHTML='';BBS=[];var ph=phase();T=ph;
  var C={night:['#18253a','#2e4560'],dawn:['#F6C9A8','#F7E2C4'],day:['#BFD6D9','#E4EEE6'],dusk:['#E8A27A','#F2CFA0']}[ph];
  var night=ph==='night';
  document.getElementById('sky').style.background=night?'#3a3a44':'#e6d6c4';
- document.getElementById('tint').style.background=night?'rgba(58,62,112,.42)':ph==='dusk'?'rgba(255,214,176,.22)':ph==='dawn'?'rgba(255,230,210,.12)':'transparent';
+ document.getElementById('tint').style.background='transparent';world.className=ph;
  // floor, then everything that lies on it
- var fl=plane(world,W,DP,'rotateX(90deg)','floor');
+ var fl=plane(world,W,DP,'rotateX(90deg)','floor lt');
  fl.addEventListener('click',function(e){go(e.offsetX-W/2,e.offsetY-DP/2,0,true)});
  // soft dark where the floor meets the walls
  onFloor(0,-DP/2+40,W,80,'background:linear-gradient(180deg,rgba(70,45,25,.22),rgba(70,45,25,0))');
  onFloor(-W/2+40,0,80,DP,'background:linear-gradient(90deg,rgba(70,45,25,.2),rgba(70,45,25,0))');
  // the window's light on the floor (moonlight at night)
  var lx=WIN.x-40;
- onFloor(lx,-DP/2+120,WIN.w-10,200,'background:linear-gradient(180deg,'+(night?'rgba(170,190,255,.22)':'rgba(255,246,214,.6)')+',rgba(255,246,214,0));transform-origin:50% 0;clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)',1.1);
- onFloor(10,50,330,186,'background:url('+IMG.rug+') center/100% 100% no-repeat',1.5);
+ onFloor(lx,-DP/2+120,WIN.w-10,200,'background:linear-gradient(180deg,'+(night?'rgba(170,190,255,.22)':'rgba(255,246,214,.6)')+',rgba(255,246,214,0));transform-origin:50% 0;clip-path:polygon(18% 0,82% 0,100% 100%,0 100%);filter:blur(5px)',1.1);
+ onFloor(10,30,330,186,'background:url('+IMG.rug+') center/100% 100% no-repeat',1.5,'lt');
  // walls
- var bw=plane(world,W,WH,'translate3d(0,'+(-WH/2)+'px,'+(-DP/2)+'px)','wall','background-image:linear-gradient(90deg,rgba(70,45,25,.16),rgba(70,45,25,0) 14%),linear-gradient(0deg,rgba(70,45,25,.10),rgba(70,45,25,0) 22%),url('+IMG.wall+')');
- var lw=plane(world,DP,WH,'translate3d('+(-W/2)+'px,'+(-WH/2)+'px,0) rotateY(90deg)','wall','background-image:linear-gradient(270deg,rgba(70,45,25,.2),rgba(70,45,25,0) 14%),linear-gradient(0deg,rgba(70,45,25,.10),rgba(70,45,25,0) 22%),url('+IMG.wall+')');
+ var bw=plane(world,W,WH,'translate3d(0,'+(-WH/2)+'px,'+(-DP/2)+'px)','wall lt','background-image:linear-gradient(90deg,rgba(70,45,25,.16),rgba(70,45,25,0) 14%),linear-gradient(0deg,rgba(70,45,25,.10),rgba(70,45,25,0) 22%),url('+IMG.wall+')');
+ var lw=plane(world,DP,WH,'translate3d('+(-W/2)+'px,'+(-WH/2)+'px,0) rotateY(90deg)','wall lt','background-image:linear-gradient(270deg,rgba(70,45,25,.2),rgba(70,45,25,0) 14%),linear-gradient(0deg,rgba(70,45,25,.10),rgba(70,45,25,0) 22%),url('+IMG.wall+')');
  // skirting on both walls
  box(world,0,-7,-DP/2+3,W,14,6,'#d8bf9c','#bf9f78','#bf9f78');
  box(world,-W/2+3,-7,0,6,14,DP,'#d8bf9c','#b3936c','#b3936c');
